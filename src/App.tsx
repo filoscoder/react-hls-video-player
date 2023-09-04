@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Loader } from "./components";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
+import { RootErrorBoundary } from "./components/RootErrorBoundary";
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
-function App() {
-  const [count, setCount] = useState(0)
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  #root {
+    width: 100vw;
+    height: 100vh;
+  }
+`;
 
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <RootErrorBoundary>
+      <Suspense fallback={<Loader />}>
+        <GlobalStyle />
+        <Outlet />
+      </Suspense>
+    </RootErrorBoundary>
+  );
+};
 
-export default App
+export default App;
