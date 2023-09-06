@@ -19,7 +19,7 @@ interface IconProps extends SVGAttributes<SVGElement> {
   color?: string;
 }
 
-const Icon = ({ name, size = "24px", color = "#fff", ...rest }: IconProps) => {
+const Icon = ({ name, size = "20px", color = "#fff", ...rest }: IconProps) => {
   const d = (iconMap[name] || "") as string;
   const relativeSize = rem(size);
 

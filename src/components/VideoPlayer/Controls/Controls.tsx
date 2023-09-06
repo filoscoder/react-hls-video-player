@@ -8,10 +8,15 @@ const ControlsContainer = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: black;
   opacity: 0.65;
+
+  &:hover {
+    display: flex;
+  }
+
   svg,
   input[type="range"] {
     opacity: 0.9;
@@ -180,7 +185,7 @@ const Controls = ({
             />
           </VolumeWrapper>
           <TimeSpan>{secToTimeString(progress)}</TimeSpan>
-          <TimeSpan>/</TimeSpan>
+          <TimeSpan>&nbsp;/&nbsp;</TimeSpan>
           <TimeSpan>{secToTimeString(duration)}</TimeSpan>
         </ControlBarWrapper>
         <OptionBarWrapper>

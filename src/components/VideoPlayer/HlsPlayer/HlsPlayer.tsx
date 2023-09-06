@@ -22,6 +22,11 @@ interface HlsPlayerProps extends VideoHTMLAttributes<HTMLVideoElement> {
 const StyledVideo = styled.video`
   width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "auto"};
+  cursor: pointer;
+
+  &:hover ~ div {
+    display: flex;
+  }
 `;
 
 const HlsPlayer = ({
