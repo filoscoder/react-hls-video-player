@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  createRef,
-  type RefObject,
-  type VideoHTMLAttributes,
-} from "react";
+import { useEffect, createRef } from "react";
 import Hls from "hls.js";
 import type Config from "hls.js";
 import styled from "styled-components";
@@ -13,10 +8,11 @@ declare const window: Window &
     Hls: any;
   };
 
-interface HlsPlayerProps extends VideoHTMLAttributes<HTMLVideoElement> {
+interface HlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   config?: Config;
-  playerRef: RefObject<HTMLVideoElement>;
+  playerRef: React.RefObject<HTMLVideoElement>;
   src: string;
+  setHlsInstance: any;
 }
 
 const StyledVideo = styled.video`
@@ -31,11 +27,14 @@ const StyledVideo = styled.video`
 
 const HlsPlayer = ({
   playerRef = createRef<HTMLVideoElement>(),
-  config,
   src,
   autoPlay,
+  setHlsInstance,
   ...props
 }: HlsPlayerProps) => {
+  const defaultConfig = {
+    preload: "none",
+  };
   useEffect(() => {
     let hls: Hls;
 
@@ -48,7 +47,6 @@ const HlsPlayer = ({
 
       const newHls = new Hls({
         enableWorker: false,
-        ...config,
       });
 
       if (playerRef.current != null) {
@@ -68,6 +66,7 @@ const HlsPlayer = ({
                 ),
               );
           }
+          setHlsInstance(newHls);
         });
       });
 
@@ -100,14 +99,26 @@ const HlsPlayer = ({
         hls.destroy();
       }
     };
-  }, [autoPlay, config, playerRef, src]);
+  }, [autoPlay, playerRef, setHlsInstance, src]);
 
   // If Media Source is supported, use HLS.js to play video
   // Fallback to using a regular video player if HLS is supported by default in the user's browser
   return Hls.isSupported() ? (
-    <StyledVideo ref={playerRef} src={src} {...props} />
+    <StyledVideo
+      ref={playerRef}
+      src={src}
+      autoPlay={autoPlay}
+      {...defaultConfig}
+      {...props}
+    />
   ) : (
-    <StyledVideo ref={playerRef} src={src} autoPlay={autoPlay} {...props} />
+    <StyledVideo
+      ref={playerRef}
+      src={src}
+      autoPlay={autoPlay}
+      {...defaultConfig}
+      {...props}
+    />
   );
 };
 

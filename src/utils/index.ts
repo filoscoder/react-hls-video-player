@@ -22,3 +22,6 @@ export const secToTimeString = (secondsValue: number) => {
 
   return `${hourStr === "00" ? "" : `${hourStr}:`}${minStr}:${secStr}`;
 };
+
+export const valueToLabel = (levelValue: number) =>
+  levelValue === -1 ? "Auto" : `${levelValue}p`;

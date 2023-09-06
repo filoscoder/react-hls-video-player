@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Icon } from "../../ui/Icon";
-import { rem, secToTimeString } from "../../../utils";
+import { rem, secToTimeString, valueToLabel } from "../../../utils";
 import useFullscreen from "../../../hooks/use-fullscreen";
+import { ChangeEvent, useState, useEffect } from "react";
+import Hls from "hls.js";
 
 const ControlsContainer = styled.div`
   position: absolute;
@@ -10,10 +12,10 @@ const ControlsContainer = styled.div`
   width: 100%;
   display: none;
   flex-direction: column;
-  background-color: black;
+  background-color: #000;
   opacity: 0.65;
 
-  &:hover {
+  & {
     display: flex;
   }
 
@@ -103,7 +105,7 @@ const VolumeSlider = styled(StyledSlider)`
   }
 `;
 
-const VideoProgressSlider = styled(StyledSlider)<{ $range: number }>`
+const VideoProgressSlider = styled(StyledSlider)<{ $size: number }>`
   width: calc(100% - ${rem("16px")});
   margin: 0 ${rem("8px")};
   border-radius: 2px;
@@ -118,35 +120,114 @@ const VideoProgressSlider = styled(StyledSlider)<{ $range: number }>`
     background-color: #fff;
     border-radius: 50%;
     border: ${rem("2px")} solid #f00;
-    box-shadow: ${({ $range }) => `-${$range + 7}px 0 0 ${$range}px`} #f00;
+    box-shadow: ${({ $size }) => `-${$size + 7}px 0 0 ${$size}px`} #f00;
   }
 `;
 const TimeSpan = styled.span`
   font-family: helvetica;
   color: #fff;
 `;
+const QualityOptions = styled.ul`
+  position: absolute;
+  bottom: 70px;
+  right: ${rem("8px")};
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
+  color: #fff;
+  background-color: #303030;
+  cursor: pointer;
+`;
+const QualityOption = styled.li`
+  font-family: helvetica;
+  font-size: ${rem("16px")};
+  padding: ${rem("8px")} ${rem("16px")};
+  &:hover {
+    color: #303030;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+`;
+
+interface ControlsProps {
+  $size: number;
+  hlsInstance?: Hls;
+  playerContainerRef: React.RefObject<HTMLDivElement>;
+  playerRef: React.RefObject<HTMLVideoElement>;
+  pauseToggler: any;
+  progress: number;
+  duration: number;
+  handleProgressChange: any;
+}
 
 const Controls = ({
-  $range,
+  $size,
+  hlsInstance,
   playerContainerRef,
   playerRef,
-  expandable = true,
-  duration,
-  progress,
-  handleProgressChange,
-  isPaused,
   pauseToggler,
-  isMuted,
-  muteToggler,
-  volume,
-  handleVolumeChange,
-}: any) => {
+  progress,
+  duration,
+  handleProgressChange,
+}: ControlsProps) => {
   const [isFullscreen, setFullscreen] = useFullscreen(playerContainerRef);
+  const [isMuted, toggleIsMuted] = useState<boolean>(false);
+  const [volume, setVolume] = useState<number>(0.65);
+  const [showLevelOpts, setShowLevelOpts] = useState<boolean>(false);
+  const [levelData, setLevelData] = useState({
+    current: -1,
+    levels: [],
+  });
+
+  const muteToggler = () => {
+    if (!playerRef.current) return;
+
+    if (isMuted) {
+      playerRef.current.volume = volume;
+    } else {
+      playerRef.current.volume = 0;
+    }
+    toggleIsMuted((prev) => !prev);
+  };
+
+  const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!playerRef.current) return;
+    const volumeValue = +e.target.value;
+    playerRef.current.volume = volumeValue;
+
+    setVolume(volumeValue);
+    toggleIsMuted(volumeValue === 0);
+  };
+
+  useEffect(() => {
+    if (hlsInstance) {
+      const current = hlsInstance?.currentLevel;
+      const levelValues = hlsInstance?.levels
+        .reduce((acc: any, l: any) => {
+          if (l.height) {
+            acc.push(l.height);
+          }
+          return acc;
+        }, [])
+        .reverse();
+
+      const levels =
+        current === -1 && levelValues.length
+          ? [...levelValues, current]
+          : levelValues;
+
+      setLevelData({
+        current,
+        levels,
+      });
+    }
+  }, [hlsInstance]);
 
   return (
     <ControlsContainer>
       <VideoProgressSlider
-        $range={$range}
+        $size={$size}
         type="range"
         step="0.01"
         min="0"
@@ -160,12 +241,17 @@ const Controls = ({
             <Icon
               name={"refresh"}
               onClick={() => {
-                playerRef.current.currentTime = 0;
-                playerRef.current.play();
+                if (playerRef.current) {
+                  playerRef.current.currentTime = 0;
+                  playerRef.current.play();
+                }
               }}
             />
           ) : (
-            <Icon name={isPaused ? "play" : "pause"} onClick={pauseToggler} />
+            <Icon
+              name={playerRef.current?.paused ? "play" : "pause"}
+              onClick={pauseToggler}
+            />
           )}
           <Icon name={"next"} onClick={muteToggler} />
           <VolumeWrapper>
@@ -189,15 +275,30 @@ const Controls = ({
           <TimeSpan>{secToTimeString(duration)}</TimeSpan>
         </ControlBarWrapper>
         <OptionBarWrapper>
-          {expandable && (
-            <Icon
-              name={isFullscreen ? "compress" : "expand"}
-              // @ts-ignore
-              onClick={setFullscreen}
-            />
+          <Icon
+            name={isFullscreen ? "compress" : "expand"}
+            // @ts-ignore
+            onClick={setFullscreen}
+          />
+          <Icon name={"playing"} />
+          {levelData.levels.length && (
+            <>
+              <Icon
+                name={"more"}
+                onClick={() => setShowLevelOpts((prev) => !prev)}
+                style={{ position: "relative" }}
+              />
+              {showLevelOpts && (
+                <QualityOptions>
+                  {levelData.levels.map((level) => (
+                    <QualityOption key={level}>
+                      {valueToLabel(level)}
+                    </QualityOption>
+                  ))}
+                </QualityOptions>
+              )}
+            </>
           )}
-          <Icon name={"playing"} onClick={muteToggler} />
-          <Icon name={"more"} onClick={muteToggler} />
         </OptionBarWrapper>
       </ControlsWrapper>
     </ControlsContainer>
