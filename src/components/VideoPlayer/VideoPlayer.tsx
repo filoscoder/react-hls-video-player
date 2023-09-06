@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState, useRef } from "react";
+import { useState, useRef, type ChangeEvent } from "react";
 import { Controls } from "./Controls";
 import { HlsPlayer } from "./HlsPlayer";
 import styled from "styled-components";
@@ -10,7 +10,6 @@ const VideoPlayerContainer = styled.div<{ $maxWidth: number }>`
   background-color: #303030;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   transition: all 0.25s;
 `;
 
@@ -40,7 +39,7 @@ const VideoPlayer = (props: any) => {
       playerRef.current.volume = 0;
     }
   };
-  const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const volumeValue = +e.target.value;
     setVolume(volumeValue);
     playerRef.current.volume = volumeValue;
@@ -50,10 +49,15 @@ const VideoPlayer = (props: any) => {
     return toggleIsMuted(false);
   };
 
+  const handleProgressChange = ({ target: { value } }: any) => {
+    playerRef.current.currentTime = +value;
+    setProgress(value);
+  };
+
   const handleOnPlaying = ({ target: { currentTime, duration } }: any) => {
-    if (duration > 0) {
-      setDuration(duration);
-      setProgress(currentTime);
+    if (+duration > 0) {
+      setDuration(+duration);
+      setProgress(+currentTime);
     }
   };
 
@@ -68,15 +72,18 @@ const VideoPlayer = (props: any) => {
         {...restConfig}
       />
       <Controls
+        $range={maxWidth}
         playerContainerRef={playerContainerRef}
+        playerRef={playerRef}
         duration={duration}
         progress={progress}
+        handleProgressChange={handleProgressChange}
         isPaused={isPaused}
         pauseToggler={pauseToggler}
         isMuted={isMuted}
         muteToggler={muteToggler}
         volume={volume}
-        handleVolume={handleVolume}
+        handleVolumeChange={handleVolumeChange}
       />
     </VideoPlayerContainer>
   );
