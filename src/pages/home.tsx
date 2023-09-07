@@ -1,23 +1,19 @@
-import { useState, useEffect } from "react";
-import { CustomVideoPlayer } from "../components";
+import { useNavigate } from "react-router-dom";
 import { Flex } from "../components/ui";
-import { getVideoSourcesApi } from "@api/videos";
+import StyledHeading from "@components/ui/Heading/Heading";
 
 const Home = () => {
-  const [sources, setSources] = useState<Array<string>>([]);
-
-  useEffect(() => {
-    (async () => {
-      const data = await getVideoSourcesApi();
-
-      setSources(data);
-    })();
-  }, []);
-
+  const navigate = useNavigate();
   return (
-    <Flex direction="column">
-      <h1>HSL Video Player</h1>
-      <CustomVideoPlayer size={900} sources={sources} />
+    <Flex direction="column" style={{ backgroundColor: "purple" }}>
+      <StyledHeading tag="h1">Home</StyledHeading>
+      <button
+        onClick={() => {
+          navigate("/player");
+        }}
+      >
+        Go to Player
+      </button>
     </Flex>
   );
 };

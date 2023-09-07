@@ -1,6 +1,7 @@
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { useNavigate } from "react-router-dom";
 import { Flex } from "../ui";
+import StyledHeading from "@components/ui/Heading/Heading";
 
 const RootErrorBoundary = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -8,14 +9,14 @@ const RootErrorBoundary = ({ children }: { children: React.ReactNode }) => {
     <ErrorBoundary
       fallbackRender={({ resetErrorBoundary }: FallbackProps) => (
         <Flex direction="column">
-          <h1>{"Something went wrong"}</h1>
+          <StyledHeading tag="h1">{"Something went wrong"}</StyledHeading>
           <button
             onClick={() => {
               resetErrorBoundary();
               navigate("/");
             }}
           >
-            Go Back
+            Go to Home
           </button>
         </Flex>
       )}

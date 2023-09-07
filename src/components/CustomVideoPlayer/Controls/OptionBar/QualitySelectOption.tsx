@@ -14,18 +14,19 @@ const QualityOptions = styled.ul`
   min-width: 100px;
   color: #fff;
   background-color: #303030;
-  cursor: pointer;
 `;
 const QualityOption = styled.li`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   font-family: helvetica;
   font-size: ${rem("16px")};
   padding: ${rem("8px")} ${rem("16px")};
+  user-select: none;
   svg {
     margin-left: 6px;
   }
   &:hover {
+    cursor: pointer;
     color: #303030;
     background-color: #fff;
     border-radius: 4px;
