@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { DynamicTag } from "../DynamicTag";
+import { DynamicTag } from "./DynamicTag";
 import { rem } from "@utils";
 import { styled } from "styled-components";
 

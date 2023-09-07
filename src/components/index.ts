@@ -1,2 +1,2 @@
-export { RootErrorBoundary } from "./RootErrorBoundary";
-export { CustomVideoPlayer } from "./CustomVideoPlayer";
+export { default as RootErrorBoundary } from "./RootErrorBoundary";
+export { default as CustomVideoPlayer } from "./CustomVideoPlayer";

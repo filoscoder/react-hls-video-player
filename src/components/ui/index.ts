@@ -1,4 +1,4 @@
-export { Flex } from "./Flex";
+export { default as Flex } from "./Flex";
 export { Icon } from "./Icon";
-export { Heading } from "./Heading";
-export { Loader } from "./Loader";
+export { default as Heading } from "./Heading";
+export { default as Loader } from "./Loader/Loader";

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { ControlBar } from "./ControlBar";
-import { OptionBar } from "./OptionBar";
+import ControlBar from "./ControlBar";
+import OptionBar from "./OptionBar";
 import { rem } from "@utils";
 import { Flex } from "@components/ui";
 import type { ChangeEvent } from "react";

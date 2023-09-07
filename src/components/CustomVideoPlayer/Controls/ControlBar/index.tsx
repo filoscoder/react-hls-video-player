@@ -37,7 +37,6 @@ const ControlBar = () => {
       ) : (
         <Icon name={isPlaying ? "pause" : "play"} onClick={pauseToggler} />
       )}
-      <Icon name={"next"} />
       <VolumeControl />
       <TimeSpan>{secToTimeString(progress)}</TimeSpan>
       <TimeSpan>&nbsp;/&nbsp;</TimeSpan>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Controls } from "./Controls";
-import { HlsPlayer } from "./HlsPlayer";
+import Controls from "./Controls";
+import HlsPlayer from "./HlsPlayer";
 import styled from "styled-components";
 import useVideoPlayerStore from "@store/video-player-store";
 import { rem } from "@utils";
