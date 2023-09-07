@@ -8,57 +8,63 @@ const VideoPlayerContainer = styled.div<{ $size: number }>`
   position: relative;
   max-width: ${({ $size }) => `${$size}px`};
   min-width: ${({ $size }) => `${$size}px`};
-  background-color: #303030;
-  background: url("https://i.ytimg.com/vi/lJjRF5k--60/maxresdefault.jpg");
-  background-position: center;
-  background-size: ${({ $size }) => `${$size}px`} auto;
+  background-color: #000;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   transition: all 0.25s;
 `;
 
-const CustomVideoPlayer = ({
-  src,
-  size = 800,
-}: {
-  src: string;
+interface CustomVideoPlayerProps {
+  sources: Array<string>;
   size: number;
-}) => {
+}
+
+const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
   const playerRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [hlsInstance, setHlsInstance] = useState<Hls>();
 
-  const pauseToggler = () => {
-    if (playerRef.current?.paused) {
-      return playerRef.current?.play();
-    }
-    return playerRef.current?.pause();
-  };
+  const pauseToggler = () =>
+    playerRef.current?.paused
+      ? playerRef.current?.play()
+      : playerRef.current?.pause();
 
-  const handleProgressChange = ({ target: { value } }: any) => {
+  const handleProgressChange = (e: any) => {
+    const { value } = e.target;
     if (playerRef.current) {
       playerRef.current.currentTime = +value;
+      setProgress(value);
     }
-    setProgress(value);
   };
 
-  const handleOnPlaying = ({ target: { currentTime, duration } }: any) => {
+  const handleOnPlaying = (e: any) => {
+    const { currentTime, duration } = e.target;
     if (+duration > 0) {
       setDuration(+duration);
       setProgress(+currentTime);
     }
   };
 
+  const handleOnMetadataLoaded = (e: any) => {
+    const { duration } = e.target;
+    setDuration(+duration);
+  };
+
+  // TODO: Impl a Playlist with sources array
+  const src = sources[0];
+
   return (
     <VideoPlayerContainer ref={playerContainerRef} $size={size}>
       <HlsPlayer
-        playerRef={playerRef}
         src={src}
+        playerRef={playerRef}
         setHlsInstance={setHlsInstance}
         onClick={pauseToggler}
         onTimeUpdate={handleOnPlaying}
+        onLoadedMetadata={handleOnMetadataLoaded}
       />
       <Controls
         $size={size}
