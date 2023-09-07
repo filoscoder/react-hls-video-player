@@ -31,6 +31,9 @@ const Icon = ({ name, size = "20px", color = "#fff", ...rest }: IconProps) => {
       height={relativeSize}
       {...rest}
     >
+      {name === "playing" && (
+        <polygon points="2 3 2 11 8 7 2 3" fill={color}></polygon>
+      )}
       <path fillRule="evenodd" clipRule="evenodd" d={d} fill={color} />
     </StyledIcon>
   );
