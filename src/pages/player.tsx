@@ -5,20 +5,20 @@ import { getVideoSourcesApi } from "@api/videos";
 import StyledHeading from "@components/ui/Heading/Heading";
 
 const Player = () => {
-  const [sources, setSources] = useState<Array<string>>([]);
+  const [data, setData] = useState<Array<string>>([]);
 
   useEffect(() => {
     (async () => {
       const data = await getVideoSourcesApi();
 
-      setSources(data);
+      setData(data);
     })();
   }, []);
 
   return (
     <Flex direction="column">
       <StyledHeading tag="h1">HLS Video Player</StyledHeading>
-      <CustomVideoPlayer size={900} sources={sources} />
+      <CustomVideoPlayer size={900} data={data} />
     </Flex>
   );
 };
