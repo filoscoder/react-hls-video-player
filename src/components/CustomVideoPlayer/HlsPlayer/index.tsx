@@ -31,12 +31,11 @@ const HlsPlayer = () => {
     setPlaying,
   } = useVideoPlayerStore();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPoster, setShowPoster] = useState<boolean>(true);
 
   const handleOnCanPlayTrough = () => {
     setPlaying();
-    setIsLoading(false);
     setShowPoster(false);
   };
 
@@ -45,6 +44,7 @@ const HlsPlayer = () => {
     if (+duration > 0) {
       updateDuration(+duration);
       updateProgress(+currentTime);
+      setIsLoading(false);
     }
   };
 
@@ -58,7 +58,9 @@ const HlsPlayer = () => {
     onClick: pauseToggler,
     onLoadStart: () => {
       setShowPoster(true);
-      setIsLoading(true);
+      if (playingSrc) {
+        setIsLoading(true);
+      }
     },
     onWaiting: () => setIsLoading(true),
     onCanPlayThrough: handleOnCanPlayTrough,
@@ -117,10 +119,6 @@ const HlsPlayer = () => {
     if (Hls.isSupported()) {
       _initPlayer();
     }
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
 
     return () => {
       if (hls != null) {
