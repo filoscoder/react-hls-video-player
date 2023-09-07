@@ -1,27 +1,61 @@
-# React + TypeScript + Vite
+# BePro11 Code Challenge: HLS Video Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Requirements for Frontend position.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### 1. Install Dependencies
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+$ yarn
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+#### 2. Run on dev mode
+
+```bash
+$ yarn dev # Running at http://localhost:5173/
+```
+
+## Folder structure
+
+```bash
+📦src
+ ┣ 📂api # API request mocks
+ ┣ 📂components # components
+ ┃ ┣ 📂CustomVideoPlayer # CustomVideoPlayer component
+ ┃ ┃ ┣ 📂Controls # Controls component
+ ┃ ┃ ┃ ┣ 📂ControlBar
+ ┃ ┃ ┃ ┃ ┣ 📜VolumeControl.tsx # Volume control
+ ┃ ┃ ┃ ┣ 📂OptionBar
+ ┃ ┃ ┃ ┃ ┣ 📜ExpandOption.tsx # Fullscreen option
+ ┃ ┃ ┃ ┃ ┣ 📜PlaylistOption.tsx # Playlist option
+ ┃ ┃ ┃ ┃ ┣ 📜QualitySelectOption.tsx # Quality Selector option (if available)
+ ┃ ┃ ┣ 📂HlsPlayer # Hls Video Player component
+ ┃ ┣ 📂RootErrorBoundary # ErrorBoundary component
+ ┃ ┣ 📂ui # Reusable UI component
+ ┃ ┃ ┣ 📂Icon
+ ┃ ┃ ┃ ┣ 📜Icon.tsx # Icon component
+ ┃ ┃ ┃ ┣ 📜iconMap.json # SVG path mapper
+ ┃ ┃ ┣ 📂Loader
+ ┃ ┃ ┃ ┗ 📜Loader.tsx # Loader (Spinner) component
+ ┃ ┃ ┣ 📜DynamicTag.tsx
+ ┃ ┃ ┣ 📜Flex.tsx
+ ┃ ┃ ┣ 📜Heading.tsx
+ ┃ ┃ ┗ 📜index.ts
+ ┃ ┗ 📜index.ts
+ ┣ 📂const
+ ┃ ┗ 📜links.ts # Video poster & sources
+ ┣ 📂hooks
+ ┃ ┗ 📜use-fullscreen.ts # Fullscreen API custom-hook
+ ┣ 📂pages
+ ┃ ┣ 📜home.tsx # Home page (If something goes wrong redirects to here)
+ ┃ ┗ 📜player.tsx # Player page
+ ┣ 📂store
+ ┃ ┗ 📜video-player-store.ts # Global State Store (Zustand)
+ ┣ 📂utils
+ ┣ 📜App.tsx
+ ┣ 📜main.tsx
+ ┣ 📜router.tsx
+ ┗ 📜vite-env.d.ts
+
+```
