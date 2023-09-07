@@ -12,34 +12,12 @@ const OptionBarWrapper = styled.div`
   }
 `;
 
-interface OptionBarProps {
-  sources: Array<string>;
-  playingSrc: string;
-  setPlayingSrc: any;
-  hlsInstance?: Hls;
-  playerContainerRef: React.RefObject<HTMLDivElement>;
-}
-
-const OptionBar = ({
-  sources,
-  playingSrc,
-  setPlayingSrc,
-  hlsInstance,
-  playerContainerRef,
-}: OptionBarProps) => {
+const OptionBar = () => {
   return (
     <OptionBarWrapper>
-      <PlaylistOption
-        sources={sources}
-        playingSrc={playingSrc}
-        setPlayingSrc={setPlayingSrc}
-      />
-      <ExpandOption playerContainerRef={playerContainerRef} />
-
-      <QualitySelectOption
-        hlsInstance={hlsInstance}
-        currentLevel={hlsInstance?.currentLevel}
-      />
+      <PlaylistOption />
+      <QualitySelectOption />
+      <ExpandOption />
     </OptionBarWrapper>
   );
 };

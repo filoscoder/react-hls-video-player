@@ -1,4 +1,5 @@
 import { Icon } from "@components/ui/Icon";
+import useVideoPlayerStore from "@store/video-player-store";
 import { rem } from "@utils";
 import { useState } from "react";
 import { styled } from "styled-components";
@@ -35,21 +36,14 @@ const PlaylistTrack = styled.li`
   }
 `;
 
-interface PlaylistOptionProps {
-  sources: Array<string>;
-  playingSrc: string;
-  setPlayingSrc: any;
-}
-
-const PlaylistOption = ({
-  playingSrc,
-  setPlayingSrc,
-  sources,
-}: PlaylistOptionProps) => {
+const PlaylistOption = () => {
+  const { sources, playingSrc, setPlayingSrc } = useVideoPlayerStore();
   const [showPlaylist, setShowPlaylist] = useState<boolean>(true);
+
   const handleShowPlaylist = () => {
     setShowPlaylist((prev) => !prev);
   };
+
   return (
     <PlaylistOptionContainer>
       <Icon name={"playing"} onClick={handleShowPlaylist} />

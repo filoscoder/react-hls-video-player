@@ -1,88 +1,59 @@
-import { useState, useEffect, useRef, ChangeEvent } from "react";
+import { useEffect } from "react";
 import { Controls } from "./Controls";
 import { HlsPlayer } from "./HlsPlayer";
 import styled from "styled-components";
-import type Hls from "hls.js";
+import useVideoPlayerStore from "@store/video-player-store";
+import { rem } from "@utils";
 
 const VideoPlayerContainer = styled.div<{ $size: number }>`
   position: relative;
-  max-width: ${({ $size }) => `${$size}px`};
-  min-width: ${({ $size }) => `${$size}px`};
+  max-width: 100%;
+  width: ${({ $size }) => `${$size}px`};
   background-color: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: all 0.25s;
+
+  &:hover > #player-controls {
+    height: 65px;
+    opacity: 0.65;
+    visibility: visible;
+  }
+  &:hover > #playing-title {
+    opacity: 0.75;
+  }
+`;
+const TitleSpan = styled.span`
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  top: ${rem("16px")};
+  left: ${rem("16px")};
+  font-family: helvetica;
+  color: #fff;
+  opacity: 0;
+
+  transition: all 0.2s cubic-bezier(0.4, 0, 1, 1);
 `;
 
 interface CustomVideoPlayerProps {
-  sources: Array<string>;
+  data: Array<string>;
   size: number;
 }
 
-const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
-  const playerRef = useRef<HTMLVideoElement>(null);
-  const playerContainerRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(0);
-  const [hlsInstance, setHlsInstance] = useState<Hls>();
-  const [playingSrc, setPlayingSrc] = useState<string>("");
-
-  const pauseToggler = () => {
-    if (playerRef.current && isNaN(playerRef.current.duration)) return;
-    playerRef.current?.paused
-      ? playerRef.current?.play()
-      : playerRef.current?.pause();
-  };
-
-  const handleProgressChange = (e: ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    if (playerRef.current) {
-      playerRef.current.currentTime = +value;
-      setProgress(+value);
-    }
-  };
-
-  const handleOnPlaying = (e: any) => {
-    const { currentTime, duration } = e.target as HTMLVideoElement;
-    if (+duration > 0) {
-      setDuration(+duration);
-      setProgress(+currentTime);
-    }
-  };
-
-  const handleOnMetadataLoaded = (e: any) => {
-    const { duration } = e.target as HTMLVideoElement;
-    setDuration(+duration);
-  };
+const CustomVideoPlayer = ({ data, size = 800 }: CustomVideoPlayerProps) => {
+  const { playerContainerRef, setSources, playingTitle } =
+    useVideoPlayerStore();
 
   useEffect(() => {
-    setPlayingSrc(sources[0]);
-  }, [sources]);
+    setSources(data);
+  }, [data, setSources]);
 
   return (
     <VideoPlayerContainer ref={playerContainerRef} $size={size}>
-      <HlsPlayer
-        src={playingSrc}
-        playerRef={playerRef}
-        setHlsInstance={setHlsInstance}
-        onClick={pauseToggler}
-        onTimeUpdate={handleOnPlaying}
-        onLoadedMetadata={handleOnMetadataLoaded}
-      />
-      <Controls
-        $size={size}
-        sources={sources}
-        playingSrc={playingSrc}
-        setPlayingSrc={setPlayingSrc}
-        hlsInstance={hlsInstance}
-        playerContainerRef={playerContainerRef}
-        playerRef={playerRef}
-        pauseToggler={pauseToggler}
-        progress={progress}
-        duration={duration}
-        handleProgressChange={handleProgressChange}
-      />
+      <TitleSpan id="playing-title">{playingTitle}</TitleSpan>
+      <HlsPlayer />
+      <Controls $size={size} />
     </VideoPlayerContainer>
   );
 };

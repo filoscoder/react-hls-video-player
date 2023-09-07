@@ -3,6 +3,7 @@ import { Icon } from "@components/ui/Icon";
 import { rem } from "@utils";
 import { useState, useEffect } from "react";
 import Hls from "hls.js";
+import useVideoPlayerStore from "@store/video-player-store";
 
 const QualityOptions = styled.ul`
   position: absolute;
@@ -36,27 +37,20 @@ const QualityOption = styled.li`
   }
 `;
 
-interface QualitySelectOptionProps {
-  hlsInstance?: Hls;
-  currentLevel?: number;
-}
-
 interface LevelValue {
   level: number;
   value: number;
   label: string;
 }
 
-const QualitySelectOption = ({
-  hlsInstance,
-  currentLevel = -1,
-}: QualitySelectOptionProps) => {
+const QualitySelectOption = () => {
+  const { hlsInstance } = useVideoPlayerStore();
   const [showLevelOpts, setShowLevelOpts] = useState<boolean>(false);
   const [levelData, setLevelData] = useState<{
     current: number;
     levels: Array<LevelValue>;
   }>({
-    current: currentLevel,
+    current: -1,
     levels: [],
   });
 
@@ -75,13 +69,13 @@ const QualitySelectOption = ({
   };
 
   useEffect(() => {
-    if (hlsInstance) {
+    if (hlsInstance instanceof Hls) {
       const autoLevelValue = {
         level: -1,
         value: -1,
         label: "Auto",
       };
-      const reducedLevelValue = hlsInstance?.levels
+      const reducedLevelValue = hlsInstance.levels
         .reduce<Array<LevelValue>>((acc, l, idx) => {
           if (l.height) {
             const data = {
@@ -95,7 +89,7 @@ const QualitySelectOption = ({
         }, [])
         .sort((a, b) => b.value - a.value);
 
-      const current = currentLevel;
+      const current = hlsInstance.currentLevel;
       const levels =
         reducedLevelValue.length > 1
           ? [...reducedLevelValue, autoLevelValue]
@@ -106,7 +100,7 @@ const QualitySelectOption = ({
         levels,
       });
     }
-  }, [hlsInstance, currentLevel]);
+  }, [hlsInstance]);
 
   return (
     levelData.levels.length && (

@@ -1,17 +1,20 @@
 import styled from "styled-components";
-import Hls from "hls.js";
 import { ControlBar } from "./ControlBar";
 import { OptionBar } from "./OptionBar";
 import { rem } from "@utils";
 import { Flex } from "@components/ui";
+import useVideoPlayerStore from "@store/video-player-store";
+import { ChangeEvent } from "react";
 
 const ControlsContainer = styled(Flex)`
-  height: 65px;
+  height: 0px;
   position: absolute;
   bottom: 0;
   left: 0;
   background-color: #000;
   opacity: 0.65;
+  visibility: hidden;
+  transition: all 0.125s cubic-bezier(0.4, 0, 1, 1);
 
   svg,
   input[type="range"] {
@@ -64,33 +67,22 @@ const VideoProgressSlider = styled.input<{ $size: number }>`
 
 interface ControlsProps {
   $size: number;
-  sources: Array<string>;
-  playingSrc: string;
-  setPlayingSrc: any;
-  hlsInstance?: Hls;
-  playerContainerRef: React.RefObject<HTMLDivElement>;
-  playerRef: React.RefObject<HTMLVideoElement>;
-  pauseToggler: React.MouseEventHandler<SVGElement>;
-  progress: number;
-  duration: number;
-  handleProgressChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const Controls = ({
-  $size,
-  sources,
-  playingSrc,
-  setPlayingSrc,
-  hlsInstance,
-  playerContainerRef,
-  playerRef,
-  pauseToggler,
-  progress,
-  duration,
-  handleProgressChange,
-}: ControlsProps) => {
+const Controls = ({ $size }: ControlsProps) => {
+  const { playerRef, progress, duration, updateProgress } =
+    useVideoPlayerStore();
+
+  const handleProgressChange = (e: ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    if (playerRef.current) {
+      playerRef.current.currentTime = +value;
+      updateProgress(+value);
+    }
+  };
+
   return (
-    <ControlsContainer direction="column">
+    <ControlsContainer direction="column" id="player-controls">
       <VideoProgressSlider
         $size={$size}
         type="range"
@@ -101,19 +93,8 @@ const Controls = ({
         onChange={handleProgressChange}
       />
       <ControlsWrapper>
-        <ControlBar
-          playerRef={playerRef}
-          progress={progress}
-          duration={duration}
-          pauseToggler={pauseToggler}
-        />
-        <OptionBar
-          sources={sources}
-          playingSrc={playingSrc}
-          setPlayingSrc={setPlayingSrc}
-          hlsInstance={hlsInstance}
-          playerContainerRef={playerContainerRef}
-        />
+        <ControlBar />
+        <OptionBar />
       </ControlsWrapper>
     </ControlsContainer>
   );

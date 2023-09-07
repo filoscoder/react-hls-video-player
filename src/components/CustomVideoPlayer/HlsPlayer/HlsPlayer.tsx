@@ -1,19 +1,14 @@
-import { useEffect, createRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Hls from "hls.js";
 import styled from "styled-components";
 import { Loader } from "@components/Loader";
 import { BE_PRO_POSTER_LINK } from "@const/links";
+import useVideoPlayerStore from "@store/video-player-store";
 
 declare const window: Window &
   typeof globalThis & {
     Hls: typeof Hls;
   };
-
-interface HlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
-  src: string;
-  playerRef: React.RefObject<HTMLVideoElement>;
-  setHlsInstance: React.Dispatch<React.SetStateAction<Hls | undefined>>;
-}
 
 const StyledVideo = styled.video`
   width: ${({ width }) => width || "100%"};
@@ -25,27 +20,50 @@ const StyledVideo = styled.video`
   }
 `;
 
-const HlsPlayer = ({
-  src,
-  playerRef = createRef<HTMLVideoElement>(),
-  setHlsInstance,
-  ...props
-}: HlsPlayerProps) => {
+const HlsPlayer = () => {
+  const {
+    playerRef,
+    playingSrc,
+    updateDuration,
+    updateProgress,
+    pauseToggler,
+    setHlsInstance,
+    setPlaying,
+  } = useVideoPlayerStore();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showPoster, setShowPoster] = useState<boolean>(true);
 
-  const handleOnWaiting = () => {
-    setIsLoading(true);
-  };
   const handleOnCanPlayTrough = () => {
+    setPlaying();
     setIsLoading(false);
     setShowPoster(false);
   };
 
+  const handleOnPlaying = (e: any) => {
+    const { currentTime, duration } = e.target as HTMLVideoElement;
+    if (+duration > 0) {
+      updateDuration(+duration);
+      updateProgress(+currentTime);
+    }
+  };
+
+  const handleOnMetadataLoaded = (e: any) => {
+    const { duration } = e.target as HTMLVideoElement;
+    updateDuration(+duration);
+  };
+
   const defaultConfig = {
     poster: showPoster ? BE_PRO_POSTER_LINK : "",
-    onWaiting: handleOnWaiting,
+    onClick: pauseToggler,
+    onLoadStart: () => {
+      setShowPoster(true);
+      setIsLoading(true);
+    },
+    onWaiting: () => setIsLoading(true),
     onCanPlayThrough: handleOnCanPlayTrough,
+    onTimeUpdate: handleOnPlaying,
+    onLoadedMetadata: handleOnMetadataLoaded,
   };
 
   useEffect(() => {
@@ -59,7 +77,8 @@ const HlsPlayer = ({
       window.Hls = Hls;
 
       const newHls = new Hls({
-        enableWorker: false,
+        enableWorker: true,
+        startLevel: -1,
       });
 
       if (playerRef.current != null) {
@@ -68,7 +87,7 @@ const HlsPlayer = ({
 
       // Event Docs: https://github.com/video-dev/hls.js/blob/v1.4.7/docs/API.md#runtime-events
       newHls.on(Hls.Events.MEDIA_ATTACHED, () => {
-        newHls.loadSource(src);
+        newHls.loadSource(playingSrc);
 
         newHls.on(Hls.Events.MANIFEST_PARSED, () => {
           setHlsInstance(newHls);
@@ -108,16 +127,16 @@ const HlsPlayer = ({
         hls.destroy();
       }
     };
-  }, [src, playerRef, setHlsInstance]);
+  }, [playingSrc, playerRef, setHlsInstance]);
 
   // If Media Source is supported, use HLS.js to play video
   // Fallback to using a regular video player if HLS is supported by default in the user's browser
   return (
     <>
       {Hls.isSupported() ? (
-        <StyledVideo ref={playerRef} src={src} {...defaultConfig} {...props} />
+        <StyledVideo ref={playerRef} src={playingSrc} {...defaultConfig} />
       ) : (
-        <StyledVideo ref={playerRef} src={src} {...defaultConfig} {...props} />
+        <StyledVideo ref={playerRef} src={playingSrc} {...defaultConfig} />
       )}
       {isLoading && <Loader />}
     </>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Icon } from "@components/ui/Icon";
 import { rem } from "@utils";
 import { ChangeEvent, useState } from "react";
+import useVideoPlayerStore from "@store/video-player-store";
 
 const VolumeWrapper = styled.div`
   #volume-icon {
@@ -58,11 +59,8 @@ const VolumeSlider = styled(StyledSlider)`
   }
 `;
 
-interface ControlsProps {
-  playerRef: React.RefObject<HTMLVideoElement>;
-}
-
-const VolumeControl = ({ playerRef }: ControlsProps) => {
+const VolumeControl = () => {
+  const { playerRef } = useVideoPlayerStore();
   const [isMuted, toggleIsMuted] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(0.65);
 

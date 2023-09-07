@@ -1,11 +1,9 @@
 import { Icon } from "@components/ui/Icon";
 import useFullscreen from "@hooks/use-fullscreen";
+import useVideoPlayerStore from "@store/video-player-store";
 
-interface ExpandOptionProps {
-  playerContainerRef: React.RefObject<HTMLDivElement>;
-}
-
-const ExpandOption = ({ playerContainerRef }: ExpandOptionProps) => {
+const ExpandOption = () => {
+  const { playerContainerRef } = useVideoPlayerStore();
   const [isFullscreen, setFullscreen] = useFullscreen(playerContainerRef);
 
   return (
