@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Icon } from "@components/ui/Icon";
+import { Icon } from "@components/ui";
 import { rem, secToTimeString } from "@utils";
 import VolumeControl from "./VolumeControl";
 import useVideoPlayerStore from "@store/video-player-store";

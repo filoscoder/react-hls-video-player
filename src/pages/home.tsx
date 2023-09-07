@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { Flex } from "../components/ui";
-import StyledHeading from "@components/ui/Heading/Heading";
+import { Flex, Heading } from "@components/ui";
 
 const Home = () => {
   const navigate = useNavigate();
   return (
     <Flex direction="column" style={{ backgroundColor: "purple" }}>
-      <StyledHeading tag="h1">Home</StyledHeading>
+      <Heading tag="h1">Home</Heading>
       <button
         onClick={() => {
           navigate("/player");

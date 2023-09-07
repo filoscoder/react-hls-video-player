@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Hls from "hls.js";
 import styled from "styled-components";
-import { Loader } from "@components/Loader";
+import { Loader } from "@components/ui/Loader";
 import { BE_PRO_POSTER_LINK } from "@const/links";
 import useVideoPlayerStore from "@store/video-player-store";
 

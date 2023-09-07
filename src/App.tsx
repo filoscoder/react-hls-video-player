@@ -1,7 +1,7 @@
-import { Loader } from "./components";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { RootErrorBoundary } from "./components/RootErrorBoundary";
+import { RootErrorBoundary } from "@components/RootErrorBoundary";
+import { Loader } from "@components/ui";
 
 const App = () => {
   return (

@@ -19,29 +19,24 @@ const headingStyleMap = {
   h6: rem(15),
 };
 
-const StyledHeadingElement = styled(DynamicTag)<HeadingProps>`
+const StyledHeading = styled(DynamicTag)<HeadingProps>`
   font-family: Helvetica;
   font-size: ${({ tag }) => headingStyleMap[tag]};
   color: ${({ color }) => color};
   margin: ${rem(16)} 0;
 `;
 
-const StyledHeading = ({
+const Heading = ({
   tag,
   color = "#fff",
   className,
   children,
 }: HeadingProps) => {
   return (
-    <StyledHeadingElement
-      className={className}
-      tagName={tag}
-      tag={tag}
-      color={color}
-    >
+    <StyledHeading className={className} tagName={tag} tag={tag} color={color}>
       {children}
-    </StyledHeadingElement>
+    </StyledHeading>
   );
 };
 
-export default StyledHeading;
+export default Heading;

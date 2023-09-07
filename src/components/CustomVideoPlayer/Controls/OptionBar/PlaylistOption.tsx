@@ -1,4 +1,4 @@
-import { Icon } from "@components/ui/Icon";
+import { Icon } from "@components/ui";
 import useVideoPlayerStore from "@store/video-player-store";
 import { rem } from "@utils";
 import { useState } from "react";

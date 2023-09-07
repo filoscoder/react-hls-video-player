@@ -1,5 +1,4 @@
 import { SVGAttributes } from "react";
-
 import { rem } from "../../../utils";
 import iconMap from "./iconMap.json";
 import styled from "styled-components";

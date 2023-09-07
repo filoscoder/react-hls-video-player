@@ -1,4 +1,4 @@
-import { Icon } from "@components/ui/Icon";
+import { Icon } from "@components/ui";
 import useFullscreen from "@hooks/use-fullscreen";
 import useVideoPlayerStore from "@store/video-player-store";
 

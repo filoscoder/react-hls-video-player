@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { rem } from "@utils";
-import Hls from "hls.js";
 import ExpandOption from "./ExpandOption";
 import QualitySelectOption from "./QualitySelectOption";
 import PlaylistOption from "./PlaylistOption";

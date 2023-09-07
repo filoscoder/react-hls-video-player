@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { CustomVideoPlayer } from "../components";
-import { Flex } from "../components/ui";
+import { CustomVideoPlayer } from "@components";
+import { Flex, Heading } from "@components/ui";
 import { getVideoSourcesApi } from "@api/videos";
-import StyledHeading from "@components/ui/Heading/Heading";
 
 const Player = () => {
   const [data, setData] = useState<Array<string>>([]);
@@ -17,7 +16,7 @@ const Player = () => {
 
   return (
     <Flex direction="column">
-      <StyledHeading tag="h1">HLS Video Player</StyledHeading>
+      <Heading tag="h1">HLS Video Player</Heading>
       <CustomVideoPlayer size={900} data={data} />
     </Flex>
   );

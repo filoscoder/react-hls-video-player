@@ -3,8 +3,8 @@ import { ControlBar } from "./ControlBar";
 import { OptionBar } from "./OptionBar";
 import { rem } from "@utils";
 import { Flex } from "@components/ui";
+import type { ChangeEvent } from "react";
 import useVideoPlayerStore from "@store/video-player-store";
-import { ChangeEvent } from "react";
 
 const ControlsContainer = styled(Flex)`
   height: 0px;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Icon } from "@components/ui/Icon";
+import { Icon } from "@components/ui";
 import { rem } from "@utils";
 import { useState, useEffect } from "react";
 import Hls from "hls.js";
