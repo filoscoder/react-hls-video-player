@@ -6,7 +6,7 @@ import { rem } from "@utils";
 import { Flex } from "@components/ui";
 
 const ControlsContainer = styled(Flex)`
-  height: unset;
+  height: 65px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -20,6 +20,7 @@ const ControlsContainer = styled(Flex)`
   }
 `;
 const ControlsWrapper = styled(Flex)`
+  justify-content: space-between;
   svg:hover {
     transform: scale(1.1);
     opacity: 1;
@@ -63,6 +64,9 @@ const VideoProgressSlider = styled.input<{ $size: number }>`
 
 interface ControlsProps {
   $size: number;
+  sources: Array<string>;
+  playingSrc: string;
+  setPlayingSrc: any;
   hlsInstance?: Hls;
   playerContainerRef: React.RefObject<HTMLDivElement>;
   playerRef: React.RefObject<HTMLVideoElement>;
@@ -74,6 +78,9 @@ interface ControlsProps {
 
 const Controls = ({
   $size,
+  sources,
+  playingSrc,
+  setPlayingSrc,
   hlsInstance,
   playerContainerRef,
   playerRef,
@@ -93,7 +100,7 @@ const Controls = ({
         value={progress}
         onChange={handleProgressChange}
       />
-      <ControlsWrapper justifyContent="space-between">
+      <ControlsWrapper>
         <ControlBar
           playerRef={playerRef}
           progress={progress}
@@ -101,6 +108,9 @@ const Controls = ({
           pauseToggler={pauseToggler}
         />
         <OptionBar
+          sources={sources}
+          playingSrc={playingSrc}
+          setPlayingSrc={setPlayingSrc}
           hlsInstance={hlsInstance}
           playerContainerRef={playerContainerRef}
         />

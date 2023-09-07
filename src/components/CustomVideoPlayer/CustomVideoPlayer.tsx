@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent } from "react";
+import { useState, useEffect, useRef, ChangeEvent } from "react";
 import { Controls } from "./Controls";
 import { HlsPlayer } from "./HlsPlayer";
 import styled from "styled-components";
@@ -26,6 +26,7 @@ const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [hlsInstance, setHlsInstance] = useState<Hls>();
+  const [playingSrc, setPlayingSrc] = useState<string>("");
 
   const pauseToggler = () =>
     playerRef.current?.paused
@@ -53,13 +54,14 @@ const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
     setDuration(+duration);
   };
 
-  // TODO: Impl a Playlist with sources array
-  const src = sources[0];
+  useEffect(() => {
+    setPlayingSrc(sources[0]);
+  }, [sources]);
 
   return (
     <VideoPlayerContainer ref={playerContainerRef} $size={size}>
       <HlsPlayer
-        src={src}
+        src={playingSrc}
         playerRef={playerRef}
         setHlsInstance={setHlsInstance}
         onClick={pauseToggler}
@@ -68,6 +70,9 @@ const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
       />
       <Controls
         $size={size}
+        sources={sources}
+        playingSrc={playingSrc}
+        setPlayingSrc={setPlayingSrc}
         hlsInstance={hlsInstance}
         playerContainerRef={playerContainerRef}
         playerRef={playerRef}

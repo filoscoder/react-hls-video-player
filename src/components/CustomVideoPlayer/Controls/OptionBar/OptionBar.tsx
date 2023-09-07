@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Icon } from "@components/ui/Icon";
 import { rem } from "@utils";
 import Hls from "hls.js";
 import ExpandOption from "./ExpandOption";
 import QualitySelectOption from "./QualitySelectOption";
+import PlaylistOption from "./PlaylistOption";
 
 const OptionBarWrapper = styled.div`
   margin: ${rem("16px")};
@@ -13,14 +13,27 @@ const OptionBarWrapper = styled.div`
 `;
 
 interface OptionBarProps {
+  sources: Array<string>;
+  playingSrc: string;
+  setPlayingSrc: any;
   hlsInstance?: Hls;
   playerContainerRef: React.RefObject<HTMLDivElement>;
 }
 
-const OptionBar = ({ hlsInstance, playerContainerRef }: OptionBarProps) => {
+const OptionBar = ({
+  sources,
+  playingSrc,
+  setPlayingSrc,
+  hlsInstance,
+  playerContainerRef,
+}: OptionBarProps) => {
   return (
     <OptionBarWrapper>
-      <Icon name="playing" />
+      <PlaylistOption
+        sources={sources}
+        playingSrc={playingSrc}
+        setPlayingSrc={setPlayingSrc}
+      />
       <ExpandOption playerContainerRef={playerContainerRef} />
 
       <QualitySelectOption
