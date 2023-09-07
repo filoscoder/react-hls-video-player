@@ -17,7 +17,7 @@ const QualityOptions = styled.ul`
 `;
 const QualityOption = styled.li`
   display: flex;
-  align-items: baseline;
+  align-items: center;
   font-family: helvetica;
   font-size: ${rem("16px")};
   padding: ${rem("8px")} ${rem("16px")};

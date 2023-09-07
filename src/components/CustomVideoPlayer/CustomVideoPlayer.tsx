@@ -28,10 +28,12 @@ const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
   const [hlsInstance, setHlsInstance] = useState<Hls>();
   const [playingSrc, setPlayingSrc] = useState<string>("");
 
-  const pauseToggler = () =>
+  const pauseToggler = () => {
+    if (playerRef.current && isNaN(playerRef.current.duration)) return;
     playerRef.current?.paused
       ? playerRef.current?.play()
       : playerRef.current?.pause();
+  };
 
   const handleProgressChange = (e: ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;

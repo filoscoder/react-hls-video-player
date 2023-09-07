@@ -32,16 +32,18 @@ const HlsPlayer = ({
   ...props
 }: HlsPlayerProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showPoster, setShowPoster] = useState<boolean>(true);
 
   const handleOnWaiting = () => {
     setIsLoading(true);
   };
   const handleOnCanPlayTrough = () => {
     setIsLoading(false);
+    setShowPoster(false);
   };
 
   const defaultConfig = {
-    poster: isLoading ? BE_PRO_POSTER_LINK : "",
+    poster: showPoster ? BE_PRO_POSTER_LINK : "",
     onWaiting: handleOnWaiting,
     onCanPlayThrough: handleOnCanPlayTrough,
   };
@@ -96,6 +98,10 @@ const HlsPlayer = ({
     if (Hls.isSupported()) {
       _initPlayer();
     }
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
     return () => {
       if (hls != null) {

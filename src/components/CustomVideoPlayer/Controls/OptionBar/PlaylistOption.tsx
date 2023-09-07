@@ -13,13 +13,10 @@ const PlaylistWindow = styled.ul`
   background-color: #303030;
   color: #fff;
   border-radius: 4px;
-  &:hover {
-    background-color: #302030;
-  }
 `;
 const PlaylistTrack = styled.li`
   display: flex;
-  align-items: baseline;
+  align-items: center;
   font-family: helvetica;
   font-size: ${rem("16px")};
   padding: ${rem("8px")} ${rem("16px")};
