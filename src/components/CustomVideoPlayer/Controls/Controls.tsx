@@ -3,20 +3,15 @@ import Hls from "hls.js";
 import { ControlBar } from "./ControlBar";
 import { OptionBar } from "./OptionBar";
 import { rem } from "@utils";
+import { Flex } from "@components/ui";
 
-const ControlsContainer = styled.div`
+const ControlsContainer = styled(Flex)`
+  height: unset;
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  display: none;
-  flex-direction: column;
   background-color: #000;
   opacity: 0.65;
-
-  & {
-    display: flex;
-  }
 
   svg,
   input[type="range"] {
@@ -24,10 +19,7 @@ const ControlsContainer = styled.div`
     cursor: pointer;
   }
 `;
-const ControlsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+const ControlsWrapper = styled(Flex)`
   svg:hover {
     transform: scale(1.1);
     opacity: 1;
@@ -74,10 +66,10 @@ interface ControlsProps {
   hlsInstance?: Hls;
   playerContainerRef: React.RefObject<HTMLDivElement>;
   playerRef: React.RefObject<HTMLVideoElement>;
-  pauseToggler: any;
+  pauseToggler: React.MouseEventHandler<SVGElement>;
   progress: number;
   duration: number;
-  handleProgressChange: any;
+  handleProgressChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Controls = ({
@@ -91,7 +83,7 @@ const Controls = ({
   handleProgressChange,
 }: ControlsProps) => {
   return (
-    <ControlsContainer>
+    <ControlsContainer direction="column">
       <VideoProgressSlider
         $size={$size}
         type="range"
@@ -101,7 +93,7 @@ const Controls = ({
         value={progress}
         onChange={handleProgressChange}
       />
-      <ControlsWrapper>
+      <ControlsWrapper justifyContent="space-between">
         <ControlBar
           playerRef={playerRef}
           progress={progress}

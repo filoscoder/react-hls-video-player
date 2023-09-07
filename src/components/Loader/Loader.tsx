@@ -3,9 +3,8 @@ import { styled } from "styled-components";
 
 const AnimatedIcon = styled(Icon)`
   position: absolute;
-  top: 37%;
-  left: 47%;
-  transform: translate(-37%, -47%);
+  top: 36.5%;
+  left: 46.5%;
   animation-name: spin;
   animation-duration: 1000ms;
   animation-iteration-count: infinite;

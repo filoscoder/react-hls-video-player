@@ -2,20 +2,20 @@ import { useEffect, createRef, useState } from "react";
 import Hls from "hls.js";
 import styled from "styled-components";
 import { Loader } from "@components/Loader";
+import { BE_PRO_POSTER_LINK } from "@const/links";
 
 declare const window: Window &
   typeof globalThis & {
-    Hls: any;
+    Hls: typeof Hls;
   };
 
 interface HlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   src: string;
   playerRef: React.RefObject<HTMLVideoElement>;
-  setHlsInstance: any;
+  setHlsInstance: React.Dispatch<React.SetStateAction<Hls | undefined>>;
 }
 
 const StyledVideo = styled.video`
-  position: relative;
   width: ${({ width }) => width || "100%"};
   height: ${({ width }) => width || "auto"};
   cursor: pointer;
@@ -24,9 +24,6 @@ const StyledVideo = styled.video`
     display: flex;
   }
 `;
-
-const BE_PRO_POSTER_LINK =
-  "https://i.ytimg.com/vi/lJjRF5k--60/maxresdefault.jpg";
 
 const HlsPlayer = ({
   src,
@@ -67,6 +64,7 @@ const HlsPlayer = ({
         newHls.attachMedia(playerRef.current);
       }
 
+      // Event Docs: https://github.com/video-dev/hls.js/blob/v1.4.7/docs/API.md#runtime-events
       newHls.on(Hls.Events.MEDIA_ATTACHED, () => {
         newHls.loadSource(src);
 

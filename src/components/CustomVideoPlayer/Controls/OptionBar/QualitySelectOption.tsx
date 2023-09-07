@@ -40,12 +40,21 @@ interface QualitySelectOptionProps {
   currentLevel?: number;
 }
 
+interface LevelValue {
+  level: number;
+  value: number;
+  label: string;
+}
+
 const QualitySelectOption = ({
   hlsInstance,
-  currentLevel,
+  currentLevel = -1,
 }: QualitySelectOptionProps) => {
   const [showLevelOpts, setShowLevelOpts] = useState<boolean>(false);
-  const [levelData, setLevelData] = useState({
+  const [levelData, setLevelData] = useState<{
+    current: number;
+    levels: Array<LevelValue>;
+  }>({
     current: currentLevel,
     levels: [],
   });
@@ -66,13 +75,13 @@ const QualitySelectOption = ({
 
   useEffect(() => {
     if (hlsInstance) {
-      const autoData = {
+      const autoLevelValue = {
         level: -1,
         value: -1,
         label: "Auto",
       };
       const reducedLevelValue = hlsInstance?.levels
-        .reduce((acc: any, l: any, idx: number) => {
+        .reduce<Array<LevelValue>>((acc, l, idx) => {
           if (l.height) {
             const data = {
               level: idx,
@@ -83,12 +92,12 @@ const QualitySelectOption = ({
           }
           return acc;
         }, [])
-        .sort((a: any, b: any) => b.value - a.value);
+        .sort((a, b) => b.value - a.value);
 
       const current = currentLevel;
       const levels =
         reducedLevelValue.length > 1
-          ? [...reducedLevelValue, autoData]
+          ? [...reducedLevelValue, autoLevelValue]
           : reducedLevelValue;
 
       setLevelData({

@@ -79,7 +79,8 @@ const VolumeControl = ({ playerRef }: ControlsProps) => {
 
   const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!playerRef.current) return;
-    const volumeValue = +e.target.value;
+    const { value } = e.target;
+    const volumeValue = +value;
     playerRef.current.volume = volumeValue;
 
     setVolume(volumeValue);

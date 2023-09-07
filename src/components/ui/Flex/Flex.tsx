@@ -1,4 +1,4 @@
-import { CSSProperties, FC, HTMLAttributes, PropsWithChildren } from "react";
+import { CSSProperties, HTMLAttributes } from "react";
 import styled from "styled-components";
 
 interface FlexProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,9 +16,7 @@ const StyledFlexDiv = styled.div<FlexProps>`
   align-items: ${({ alignItems }) => alignItems || "center"};
 `;
 
-const Flex: FC<PropsWithChildren<FlexProps>> = (props) => {
-  const { children, className, ...rest } = props;
-
+const Flex = ({ children, className, ...rest }: FlexProps) => {
   return (
     <StyledFlexDiv className={className} {...rest}>
       {children}

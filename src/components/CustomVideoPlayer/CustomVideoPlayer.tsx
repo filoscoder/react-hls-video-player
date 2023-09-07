@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import { Controls } from "./Controls";
 import { HlsPlayer } from "./HlsPlayer";
 import styled from "styled-components";
@@ -32,16 +32,16 @@ const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
       ? playerRef.current?.play()
       : playerRef.current?.pause();
 
-  const handleProgressChange = (e: any) => {
-    const { value } = e.target;
+  const handleProgressChange = (e: ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
     if (playerRef.current) {
       playerRef.current.currentTime = +value;
-      setProgress(value);
+      setProgress(+value);
     }
   };
 
   const handleOnPlaying = (e: any) => {
-    const { currentTime, duration } = e.target;
+    const { currentTime, duration } = e.target as HTMLVideoElement;
     if (+duration > 0) {
       setDuration(+duration);
       setProgress(+currentTime);
@@ -49,7 +49,7 @@ const CustomVideoPlayer = ({ sources, size = 800 }: CustomVideoPlayerProps) => {
   };
 
   const handleOnMetadataLoaded = (e: any) => {
-    const { duration } = e.target;
+    const { duration } = e.target as HTMLVideoElement;
     setDuration(+duration);
   };
 

@@ -1,12 +1,23 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import router from "./router";
 import { RouterProvider } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
+import router from "./router";
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  #root {
+    width: 100vw;
+    height: 100vh;
+  }
+`;
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <StrictMode>
+    <GlobalStyle />
     <RouterProvider router={router} />
   </StrictMode>,
 );
