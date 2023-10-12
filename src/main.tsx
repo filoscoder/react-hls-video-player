@@ -11,6 +11,9 @@ const GlobalStyle = createGlobalStyle`
     width: 100vw;
     height: 100vh;
     background-color: #303030;
+    & div {
+      box-sizing: border-box;
+    }
   }
 `;
 
