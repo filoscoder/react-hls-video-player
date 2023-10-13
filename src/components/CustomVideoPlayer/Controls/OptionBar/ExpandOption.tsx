@@ -8,6 +8,7 @@ const ExpandOption = () => {
 
   return (
     <Icon
+      title="fullscreen"
       name={isFullscreen ? "compress" : "expand"}
       // @ts-ignore
       onClick={setFullscreen}

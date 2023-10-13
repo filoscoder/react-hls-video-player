@@ -14,7 +14,7 @@ const VideoPlayerContainer = styled.div<{ $size: number }>`
   flex-direction: column;
   justify-content: center;
 
-  &:hover > #player-controls {
+  & > #player-controls {
     height: 65px;
     opacity: 0.65;
     visibility: visible;

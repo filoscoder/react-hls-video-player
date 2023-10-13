@@ -1,6 +1,4 @@
-# BePro11 Code Challenge: HLS Video Player
-
-Requirements for Frontend position.
+# React Custom Video Player
 
 ## Getting Started
 
