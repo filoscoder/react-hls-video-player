@@ -1,6 +1,21 @@
-# React Custom Video Player
+# React Hls Video Player
 
-## Getting Started
+Custom Hls Video Player for m3u8 streaming.
+
+- This player example is powered with [HLS.js](https://github.com/video-dev/hls.js).
+- Most of the styling is inspired by [Youtube](https://www.youtube.com/)'s player
+- Test your _Poster image_ (Image before playing)
+- Test your m3u8 video link (Examples [here](https://gist.github.com/Fazzani/8f89546e188f8086a46073dc5d4e2928))
+
+# Stack
+
+- Language: [Typescript](https://www.typescriptlang.org/) (Javascript)
+- Client Library: [React](https://react.dev/) (v18)
+- Style: [Styled-components](https://styled-components.com/)
+- State Management: [Zustand](https://zustand-demo.pmnd.rs/)
+- Bundler: [Vite](https://vitejs.dev/)
+
+## Running locally
 
 #### 1. Install Dependencies
 
