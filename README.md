@@ -7,6 +7,8 @@ Custom Hls Video Player for m3u8 streaming.
 - Test your _Poster image_ (Image before playing)
 - Test your m3u8 video link (Examples [here](https://gist.github.com/Fazzani/8f89546e188f8086a46073dc5d4e2928))
 
+<img width="100%" src="https://github.com/filoscoder/react-hls-video-player/assets/50701501/4ab07224-10c6-4ec8-a430-65f9fd52698f" />
+
 # Stack
 
 - Language: [Typescript](https://www.typescriptlang.org/) (Javascript)
@@ -27,48 +29,4 @@ $ yarn
 
 ```bash
 $ yarn dev # Running at http://localhost:5173/
-```
-
-## Folder structure
-
-```bash
-📦src
- ┣ 📂api # API request mocks
- ┣ 📂components # components
- ┃ ┣ 📂CustomVideoPlayer # CustomVideoPlayer component
- ┃ ┃ ┣ 📂Controls # Controls component
- ┃ ┃ ┃ ┣ 📂ControlBar
- ┃ ┃ ┃ ┃ ┣ 📜VolumeControl.tsx # Volume control
- ┃ ┃ ┃ ┣ 📂OptionBar
- ┃ ┃ ┃ ┃ ┣ 📜ExpandOption.tsx # Fullscreen option
- ┃ ┃ ┃ ┃ ┣ 📜PlaylistOption.tsx # Playlist option
- ┃ ┃ ┃ ┃ ┣ 📜QualitySelectOption.tsx # Quality Selector option (if available)
- ┃ ┃ ┣ 📂HlsPlayer # Hls Video Player component
- ┃ ┣ 📂RootErrorBoundary # ErrorBoundary component
- ┃ ┣ 📂ui # Reusable UI component
- ┃ ┃ ┣ 📂Icon
- ┃ ┃ ┃ ┣ 📜Icon.tsx # Icon component
- ┃ ┃ ┃ ┣ 📜iconMap.json # SVG path mapper
- ┃ ┃ ┣ 📂Loader
- ┃ ┃ ┃ ┗ 📜Loader.tsx # Loader (Spinner) component
- ┃ ┃ ┣ 📜DynamicTag.tsx
- ┃ ┃ ┣ 📜Flex.tsx
- ┃ ┃ ┣ 📜Heading.tsx
- ┃ ┃ ┗ 📜index.ts
- ┃ ┗ 📜index.ts
- ┣ 📂const
- ┃ ┗ 📜links.ts # Video poster & sources
- ┣ 📂hooks
- ┃ ┗ 📜use-fullscreen.ts # Fullscreen API custom-hook
- ┣ 📂pages
- ┃ ┣ 📜home.tsx # Home page (If something goes wrong redirects to here)
- ┃ ┗ 📜player.tsx # Player page
- ┣ 📂store
- ┃ ┗ 📜video-player-store.ts # Global State Store (Zustand)
- ┣ 📂utils
- ┣ 📜App.tsx
- ┣ 📜main.tsx
- ┣ 📜router.tsx
- ┗ 📜vite-env.d.ts
-
 ```
