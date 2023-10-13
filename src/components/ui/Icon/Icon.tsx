@@ -30,7 +30,10 @@ const Icon = ({
   const relativeSize = rem(size);
 
   return (
-    <span title={title} style={{ height: relativeSize }}>
+    <span
+      title={title}
+      style={{ height: name !== "spinner" ? relativeSize : 0 }}
+    >
       <StyledIcon
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
