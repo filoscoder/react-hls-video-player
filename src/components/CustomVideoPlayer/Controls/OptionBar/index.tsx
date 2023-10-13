@@ -5,7 +5,7 @@ import QualitySelectOption from "./QualitySelectOption";
 import PlaylistOption from "./PlaylistOption";
 
 const OptionBarWrapper = styled.div`
-  margin: ${rem("16px")};
+  margin: ${rem("16px")} ${rem("24px")};
   svg {
     margin-left: ${rem("16px")};
   }

@@ -38,7 +38,7 @@ const PlaylistTrack = styled.li`
 
 const PlaylistOption = () => {
   const { sources, playingSrc, setPlayingSrc } = useVideoPlayerStore();
-  const [showPlaylist, setShowPlaylist] = useState<boolean>(true);
+  const [showPlaylist, setShowPlaylist] = useState<boolean>(false);
 
   const handleShowPlaylist = () => {
     setShowPlaylist((prev) => !prev);
@@ -48,15 +48,13 @@ const PlaylistOption = () => {
     <PlaylistOptionContainer>
       <Icon title="playlist" name={"playing"} onClick={handleShowPlaylist} />
       {showPlaylist && (
-        <PlaylistWindow
-          onMouseEnter={() => setShowPlaylist(true)}
-          onMouseLeave={() => setShowPlaylist(false)}
-        >
+        <PlaylistWindow onMouseLeave={handleShowPlaylist}>
           {sources.map((source, idx) => {
             const filename = source.split("/").pop();
             return (
               <PlaylistTrack
                 key={`${idx}_source`}
+                title={source}
                 onClick={() => setPlayingSrc(source)}
               >
                 {filename}

@@ -6,14 +6,14 @@ import { Flex } from "@components/ui";
 
 const ControlsContainer = styled(Flex)`
   flex-direction: column;
-  height: 0px;
+  height: 0;
   position: absolute;
   bottom: 0;
   left: 0;
   background-color: #000;
   opacity: 0.65;
   visibility: hidden;
-  transition: all 0.125s cubic-bezier(0.4, 0, 1, 1);
+  transition: all 0.135s cubic-bezier(0.4, 0, 1, 1);
 
   svg,
   input[type="range"] {

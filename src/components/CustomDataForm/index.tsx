@@ -9,7 +9,7 @@ import Label from "./Label";
 const StyledFlex = styled(Flex)`
   width: 900px;
   height: auto;
-  padding: ${rem("16px")};
+  padding: ${rem("32px")} 0;
   flex-direction: column;
   align-items: flex-start;
 `;

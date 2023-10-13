@@ -5,8 +5,8 @@ import VolumeControl from "./VolumeControl";
 import useVideoPlayerStore from "@store/video-player-store";
 
 const ControlBarWrapper = styled.div`
-  margin: ${rem("16px")};
-  svg {
+  margin: ${rem("16px")} ${rem("24px")};
+  span > svg {
     margin-right: ${rem("16px")};
   }
 `;
