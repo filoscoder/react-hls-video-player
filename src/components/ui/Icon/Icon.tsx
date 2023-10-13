@@ -13,28 +13,37 @@ const StyledIcon = styled.svg`
 export type IconName = keyof typeof iconMap;
 
 interface IconProps extends SVGAttributes<SVGElement> {
+  title?: string;
   name: IconName;
   size?: `${number}px`;
   color?: string;
 }
 
-const Icon = ({ name, size = "20px", color = "#fff", ...rest }: IconProps) => {
+const Icon = ({
+  title,
+  name,
+  size = "20px",
+  color = "#fff",
+  ...rest
+}: IconProps) => {
   const d = (iconMap[name] || "") as string;
   const relativeSize = rem(size);
 
   return (
-    <StyledIcon
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      width={relativeSize}
-      height={relativeSize}
-      {...rest}
-    >
-      {name === "playing" && (
-        <polygon points="2 3 2 11 8 7 2 3" fill={color}></polygon>
-      )}
-      <path fillRule="evenodd" clipRule="evenodd" d={d} fill={color} />
-    </StyledIcon>
+    <span title={title}>
+      <StyledIcon
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        width={relativeSize}
+        height={relativeSize}
+        {...rest}
+      >
+        {name === "playing" && (
+          <polygon points="2 3 2 11 8 7 2 3" fill={color}></polygon>
+        )}
+        <path fillRule="evenodd" clipRule="evenodd" d={d} fill={color} />
+      </StyledIcon>
+    </span>
   );
 };
 

@@ -46,7 +46,7 @@ const PlaylistOption = () => {
 
   return (
     <PlaylistOptionContainer>
-      <Icon name={"playing"} onClick={handleShowPlaylist} />
+      <Icon title="playlist" name={"playing"} onClick={handleShowPlaylist} />
       {showPlaylist && (
         <PlaylistWindow
           onMouseEnter={() => setShowPlaylist(true)}

@@ -106,6 +106,7 @@ const QualitySelectOption = () => {
     levelData.levels.length && (
       <>
         <Icon
+          title="quality"
           name={"more"}
           style={{ position: "relative" }}
           onClick={toggleOptions}

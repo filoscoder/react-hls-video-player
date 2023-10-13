@@ -88,6 +88,7 @@ const VolumeControl = () => {
   return (
     <VolumeWrapper>
       <Icon
+        title="volume"
         id="volume-icon"
         name={isMuted ? "muted" : "volume"}
         onClick={muteToggler}
