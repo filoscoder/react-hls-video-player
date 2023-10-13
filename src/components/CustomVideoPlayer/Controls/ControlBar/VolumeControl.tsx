@@ -5,6 +5,8 @@ import { ChangeEvent, useState } from "react";
 import useVideoPlayerStore from "@store/video-player-store";
 
 const VolumeWrapper = styled.div`
+  display: flex;
+  align-items: center;
   #volume-icon {
     margin-right: ${rem("8px")};
   }
@@ -13,7 +15,7 @@ const VolumeWrapper = styled.div`
       opacity: 1;
       transform: scale(1.1);
     }
-    #volume-icon ~ #volume-slider {
+    #volume-slider {
       margin-right: ${rem("16px")};
       width: 100px;
       opacity: 1;
@@ -21,13 +23,17 @@ const VolumeWrapper = styled.div`
   }
 `;
 
-const StyledSlider = styled.input`
+const VolumeSlider = styled.input`
   -webkit-appearance: none;
   overflow: hidden;
   outline: none;
+  width: 0px;
   transition: all 0.2s cubic-bezier(0.4, 0, 1, 1);
 
   &::-webkit-slider-runnable-track {
+    height: ${rem("6px")};
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
     opacity: 0.9;
     &:hover {
       opacity: 1;
@@ -35,27 +41,16 @@ const StyledSlider = styled.input`
   }
   &::-webkit-slider-thumb {
     appearance: none;
+    height: 6px;
+    width: 1px;
+    background-color: #f00;
+    box-shadow: -100px 0 0 100px #f00;
     &:hover {
       transform: scale(1.2);
     }
   }
   &:focus {
     outline: none;
-  }
-`;
-const VolumeSlider = styled(StyledSlider)`
-  width: 0px;
-
-  &::-webkit-slider-runnable-track {
-    height: ${rem("6px")};
-    background-color: rgba(255, 255, 255, 0.4);
-    border-radius: 16px;
-  }
-  &::-webkit-slider-thumb {
-    height: 6px;
-    width: 1px;
-    background-color: #f00;
-    box-shadow: -100px 0 0 100px #f00;
   }
 `;
 
