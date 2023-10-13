@@ -16,7 +16,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Flex direction="column">
+    <Flex $direction="column">
       <Heading tag="h1">React HLS Video Player</Heading>
       <CustomDataForm />
       <CustomVideoPlayer size={900} data={data} />
