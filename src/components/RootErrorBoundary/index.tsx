@@ -7,7 +7,7 @@ const RootErrorBoundary = ({ children }: { children: React.ReactNode }) => {
   return (
     <ErrorBoundary
       fallbackRender={({ resetErrorBoundary }: FallbackProps) => (
-        <Flex direction="column">
+        <Flex $direction="column">
           <Heading tag="h1">{"Something went wrong"}</Heading>
           <button
             onClick={() => {
