@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Hls from "hls.js";
 import styled from "styled-components";
 import { Loader } from "@components/ui";
-import { BE_PRO_POSTER_LINK } from "@const/links";
 import useVideoPlayerStore from "@store/video-player-store";
 
 declare const window: Window &
@@ -24,6 +23,7 @@ const HlsPlayer = () => {
   const {
     playerRef,
     playingSrc,
+    posterSrc,
     updateDuration,
     updateProgress,
     pauseToggler,
@@ -54,7 +54,7 @@ const HlsPlayer = () => {
   };
 
   const defaultConfig = {
-    poster: showPoster ? BE_PRO_POSTER_LINK : "",
+    poster: showPoster ? posterSrc : "",
     onClick: pauseToggler,
     onLoadStart: () => {
       setShowPoster(true);
@@ -94,6 +94,9 @@ const HlsPlayer = () => {
         newHls.on(Hls.Events.MANIFEST_PARSED, () => {
           setHlsInstance(newHls);
         });
+        newHls.on(Hls.Events.FRAG_PARSING_METADATA, (_event, data) => {
+          console.log("Data", { _event, data });
+        });
       });
 
       newHls.on(Hls.Events.ERROR, (_event, data) => {
@@ -127,15 +130,9 @@ const HlsPlayer = () => {
     };
   }, [playingSrc, playerRef, setHlsInstance]);
 
-  // If Media Source is supported, use HLS.js to play video
-  // Fallback to using a regular video player if HLS is supported by default in the user's browser
   return (
     <>
-      {Hls.isSupported() ? (
-        <StyledVideo ref={playerRef} src={playingSrc} {...defaultConfig} />
-      ) : (
-        <StyledVideo ref={playerRef} src={playingSrc} {...defaultConfig} />
-      )}
+      <StyledVideo ref={playerRef} src={playingSrc} {...defaultConfig} />
       {isLoading && <Loader />}
     </>
   );
