@@ -33,9 +33,13 @@ const ControlBar = () => {
   return (
     <ControlBarWrapper>
       {hasEnded ? (
-        <Icon name={"restart"} onClick={handleRestartVideo} />
+        <Icon title="restart" name={"restart"} onClick={handleRestartVideo} />
       ) : (
-        <Icon name={isPlaying ? "pause" : "play"} onClick={pauseToggler} />
+        <Icon
+          title="play"
+          name={isPlaying ? "pause" : "play"}
+          onClick={pauseToggler}
+        />
       )}
       <VolumeControl />
       <TimeSpan>{secToTimeString(progress)}</TimeSpan>

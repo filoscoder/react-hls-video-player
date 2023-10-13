@@ -1,3 +1,4 @@
+import { rem } from "@utils";
 import { HTMLAttributes } from "react";
 import styled from "styled-components";
 
@@ -8,7 +9,11 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
 
 const StyledInput = styled.input`
   width: 100%;
-  height: auto;
+  height: ${rem("32px")};
+  outline: none;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  padding: 0 1rem;
 `;
 
 const Input = ({ ...rest }: InputProps) => {
