@@ -29,7 +29,8 @@ const StyledButton = styled.button`
 `;
 
 const CustomDataForm = () => {
-  const { posterSrc, setPosterSrc, addNewSource } = useVideoPlayerStore();
+  const { posterSrc, setPosterSrc, addNewSource, pauseToggler } =
+    useVideoPlayerStore();
   const [newPosterSrc, setNewPosterSrc] = useState<string>("");
   const [newVideoSrc, setNewVideoSrc] = useState<string>("");
 
@@ -40,48 +41,55 @@ const CustomDataForm = () => {
     const value = target.value;
     switch (name) {
       case "poster":
-        return setPosterSrc(value);
+        return setNewPosterSrc(value);
       case "new-video":
         return setNewVideoSrc(value);
     }
   };
 
-  const handleNewVideoInputClick = ({ target }: any) => {
+  const handleNewInputClick = ({ target }: any) => {
     const name = target.name;
-    const getAlertMsg = (type: string) => `${type} link is not a valid URL`;
-
-    switch (name) {
-      case "poster":
-        if (!isValidUrl(newPosterSrc)) break;
-        setPosterSrc(newPosterSrc);
-        return setNewPosterSrc("");
-      case "new-video":
-        if (!isValidUrl(newVideoSrc)) break;
-        addNewSource(newVideoSrc);
-        return setNewVideoSrc("");
+    try {
+      switch (name) {
+        case "poster":
+          isValidUrl(newPosterSrc);
+          setPosterSrc(newPosterSrc);
+          break;
+        case "new-video":
+          isValidUrl(newVideoSrc);
+          addNewSource(newVideoSrc);
+          pauseToggler();
+          break;
+      }
+    } catch (error) {
+      const getAlertMsg = (type: string) => `'${type}' link should be HTTPS`;
+      alert(getAlertMsg(name));
+    } finally {
+      setNewVideoSrc("");
     }
-    return alert(getAlertMsg(name));
   };
 
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key;
     if (key !== "Enter") return;
-    return handleNewVideoInputClick(e);
+    return handleNewInputClick(e);
   };
 
   return (
     <StyledFlex>
-      <Label>Poster Image Link</Label>
+      <Label>New Poster Link</Label>
       <Flex>
         <Input
           name="poster"
-          value={posterSrc}
+          value={newPosterSrc || posterSrc}
           onKeyDown={handleEnterKey}
           onChange={handleInputChange}
         />
-        <StyledButton onClick={handleNewVideoInputClick}>Add</StyledButton>
+        <StyledButton name="poster" onClick={handleNewInputClick}>
+          Test
+        </StyledButton>
       </Flex>
-      <Label>New Video Link</Label>
+      <Label>Test Video Link</Label>
       <Flex>
         <Input
           name="new-video"
@@ -89,8 +97,8 @@ const CustomDataForm = () => {
           onChange={handleInputChange}
           onKeyDown={handleEnterKey}
         />
-        <StyledButton name="new-video" onClick={handleNewVideoInputClick}>
-          Add
+        <StyledButton name="new-video" onClick={handleNewInputClick}>
+          Play
         </StyledButton>
       </Flex>
     </StyledFlex>
