@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: #303030;
     * {
       box-sizing: border-box;
-      overflow: auto;
     }
   }
 `;
