@@ -73,7 +73,7 @@ const useVideoPlayerStore = create<State & Actions>((set) => ({
     set((state) => {
       const sources = state.sources;
       if (!sources.includes(src)) {
-        sources.push(src);
+        sources.unshift(src);
       }
       return state;
     }),

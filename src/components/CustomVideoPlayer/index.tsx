@@ -4,7 +4,7 @@ import HlsPlayer from "./HlsPlayer";
 import styled from "styled-components";
 import useVideoPlayerStore from "@store/video-player-store";
 
-const VideoPlayerContainer = styled.div<{ $size: number }>`
+const VideoPlayerContainer = styled.div`
   position: relative;
   width: 98%;
   max-width: 100%;
@@ -40,10 +40,9 @@ const TitleSpan = styled.span`
 
 interface CustomVideoPlayerProps {
   data: Array<string>;
-  size: number;
 }
 
-const CustomVideoPlayer = ({ data, size = 800 }: CustomVideoPlayerProps) => {
+const CustomVideoPlayer = ({ data }: CustomVideoPlayerProps) => {
   const { playerContainerRef, setSources, playingTitle } =
     useVideoPlayerStore();
 
@@ -52,10 +51,10 @@ const CustomVideoPlayer = ({ data, size = 800 }: CustomVideoPlayerProps) => {
   }, [data, setSources]);
 
   return (
-    <VideoPlayerContainer ref={playerContainerRef} $size={size}>
+    <VideoPlayerContainer ref={playerContainerRef}>
       <TitleSpan id="playing-title">{playingTitle}</TitleSpan>
       <HlsPlayer />
-      <Controls $size={size} />
+      <Controls />
     </VideoPlayerContainer>
   );
 };

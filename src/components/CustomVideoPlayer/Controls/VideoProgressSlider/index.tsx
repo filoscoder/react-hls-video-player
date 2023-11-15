@@ -3,7 +3,7 @@ import { rem } from "@utils";
 import type { ChangeEvent } from "react";
 import useVideoPlayerStore from "@store/video-player-store";
 
-const ProgressSlider = styled.input<{ $size: number; $progress: number }>`
+const ProgressSlider = styled.input<{ $progress: number }>`
   -webkit-appearance: none;
   appearance: none;
   outline: none;
@@ -30,11 +30,7 @@ const ProgressSlider = styled.input<{ $size: number; $progress: number }>`
   }
 `;
 
-interface ControlsProps {
-  $size: number;
-}
-
-const VideoProgressSlider = ({ $size }: ControlsProps) => {
+const VideoProgressSlider = () => {
   const { playerRef, progress, duration, updateProgress } =
     useVideoPlayerStore();
 
@@ -48,7 +44,6 @@ const VideoProgressSlider = ({ $size }: ControlsProps) => {
 
   return (
     <ProgressSlider
-      $size={$size}
       $progress={(progress / duration) * 100}
       type="range"
       step="0.01"

@@ -6,14 +6,15 @@ import { Flex } from "@components/ui";
 
 const ControlsContainer = styled(Flex)`
   flex-direction: column;
+  width: 100%;
   height: 0;
   position: absolute;
   bottom: 0;
   left: 0;
   background-color: #000;
-  opacity: 0.65;
   visibility: hidden;
-  transition: all 0.135s cubic-bezier(0.4, 0, 1, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 1, 1);
+  transition: height 0.1s cubic-bezier(0.4, 0, 1, 1);
 
   svg,
   input[type="range"] {
@@ -34,14 +35,10 @@ const ControlsWrapper = styled(Flex)`
   }
 `;
 
-interface ControlsProps {
-  $size: number;
-}
-
-const Controls = ({ $size }: ControlsProps) => {
+const Controls = () => {
   return (
     <ControlsContainer id="player-controls">
-      <VideoProgressSlider $size={$size} />
+      <VideoProgressSlider />
       <ControlsWrapper>
         <ControlBar />
         <OptionBar />
