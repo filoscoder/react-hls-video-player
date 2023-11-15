@@ -6,8 +6,8 @@ import useVideoPlayerStore from "@store/video-player-store";
 
 const VideoPlayerContainer = styled.div<{ $size: number }>`
   position: relative;
+  width: 98%;
   max-width: 100%;
-  width: ${({ $size }) => `${$size}px`};
   background-color: #000;
   display: flex;
   flex-direction: column;

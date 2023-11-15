@@ -7,7 +7,8 @@ import { isValidUrl, rem } from "@utils";
 import Label from "./Label";
 
 const StyledFlex = styled(Flex)`
-  width: 900px;
+  width: 90%;
+  max-width: 100%;
   height: auto;
   padding: ${rem("32px")} 0;
   flex-direction: column;

@@ -7,12 +7,13 @@ import router from "./router";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  #root {
+  html {
     width: 100vw;
-    height: 100vh;
+    width: calc(100vw - (100vw - 100%));
     background-color: #303030;
     * {
       box-sizing: border-box;
+      overflow: auto;
     }
   }
 `;
