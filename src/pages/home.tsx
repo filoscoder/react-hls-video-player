@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { CustomVideoPlayer } from "@components";
-import { Flex, Heading, Icon, Link } from "@components/ui";
+import { Flex, Heading, Link } from "@components/ui";
 import { getVideoSourcesApi } from "@api/videos";
 import CustomDataForm from "@components/CustomDataForm";
 
