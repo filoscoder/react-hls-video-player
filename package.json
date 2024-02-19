@@ -19,7 +19,7 @@
     "react-router-dom": "^6.21.0",
     "styled-components": "^6.1.6",
     "styled-reset": "^4.5.2",
-    "zustand": "^4.4.6"
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
