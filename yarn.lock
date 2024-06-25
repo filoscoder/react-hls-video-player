@@ -1247,10 +1247,10 @@ has-flag@^4.0.0:
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-4.0.0.tgz#944771fd9c81c81265c4d6941860da06bb59479b"
   integrity sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==
 
-hls.js@1.5.8:
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.8.tgz#73c3d2984a56f103e6900bf7a5e65b288dba846e"
-  integrity sha512-hJYMPfLhWO7/7+n4f9pn6bOheCGx0WgvVz7k3ouq3Pp1bja48NN+HeCQu3XCGYzqWQF/wo7Sk6dJAyWVJD8ECA==
+hls.js@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.10.tgz#7eb2682d7c0c34bf5ef7fd4e135f32b2e4259d43"
+  integrity sha512-/6TVPMq6aZvX8Pv6qhU2I5OSe7LeEpkyl/GUQUCYsuRpNYyWW8SrRHxd/935HGYbLJiMc1koll1CQTF8HkJTRQ==
 
 human-signals@^2.1.0:
   version "2.1.0"
