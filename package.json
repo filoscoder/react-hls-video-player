@@ -17,7 +17,7 @@
     "react-dom": "^18.3.0",
     "react-error-boundary": "^4.0.13",
     "react-router-dom": "^6.27.0",
-    "styled-components": "^6.1.12",
+    "styled-components": "^6.1.18",
     "styled-reset": "^4.5.2",
     "zustand": "^4.5.7"
   },
